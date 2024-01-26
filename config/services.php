@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'json-feed' => [
+        'url' => env('JSON_FEED_URL'),
+    ],
+
 ];
