@@ -28,6 +28,13 @@ class Item extends Model
         );
     }
 
+    protected function thumbnails(): Attribute
+    {
+        return Attribute::make(
+            get: fn(?string $value = null) => json_decode($value, true, 512, JSON_THROW_ON_ERROR),
+        );
+    }
+
     protected function attributes(): Attribute
     {
         return Attribute::make(

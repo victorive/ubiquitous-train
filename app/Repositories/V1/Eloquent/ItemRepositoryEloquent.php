@@ -21,6 +21,11 @@ class ItemRepositoryEloquent implements ItemRepository
         return Item::query()->insert($values);
     }
 
+    public function upsert(array $values, array|string $uniqueBy, array|null $update): bool
+    {
+        return Item::query()->upsert($values, $uniqueBy, $update);
+    }
+
     public function find(int $itemId): Model|Collection|Builder|array|null
     {
         return Item::query()->find($itemId);

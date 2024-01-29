@@ -20,9 +20,28 @@
                     <div class="w-full rounded-lg shadow-lg shadow-gray-500/50 duration-500 hover:scale-105">
                         <a href="{{ url('items/' . $item->id) }}">
                             <img class="object-cover w-full"
-                                 srcset="data:image/jpeg;base64,{{ $item->images['pc'] }} 1024w,
-                                 data:image/jpeg;base64,{{ $item->images['mobile'] }} 768w,
-                                 data:image/jpeg;base64,{{ $item->images['tablet'] }} 480w"
+                                 srcset="@foreach(collect($item->images) as $deviceType => $image)
+                                 @if(isset($image['image']))
+                                 data:image/jpeg;base64,{{ $image['image'] }} @if($loop->last)
+                                 @else
+                                 1024w,
+                                 @endif
+                                 @else
+                                 @if(isset($item->thumbnails[$loop->index], $item->thumbnails[$loop->index]['urls'], $item->thumbnails[$loop->index]['urls'][0]))
+                                 {{ $item->thumbnails[$loop->index]['urls'][0] }} @if($loop->last)
+                                 768w,
+                                 @else
+                                 480w,
+                                 @endif
+                                 @else
+                                 {{ asset('no_image.jpg') }} @if($loop->last)
+                                 768w,
+                                 @else
+                                 480w,
+                                 @endif
+                                 @endif
+                                 @endif
+                                 @endforeach"
                                  sizes="(max-width: 1024px) 100vw, (max-width: 768px) 100vw, (max-width: 480px) 100vw"
                                  alt="image" src=""/>
                             <div class="px-6 py-4">

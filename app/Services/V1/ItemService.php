@@ -55,11 +55,13 @@ class ItemService
             $batchedItems[] = $itemData;
 
             if (count($batchedItems) >= 300) {
-                $this->itemRepository->insert($batchedItems);
+                $this->itemRepository->upsert($batchedItems, 'id', ['id', 'name', 'license', 'wlStatus',
+                    'aliases', 'link', 'thumbnails', 'attributes', 'updated_at']);
                 $batchedItems = [];
             }
         }
 
-        $this->itemRepository->insert($batchedItems);
+        $this->itemRepository->upsert($batchedItems, 'id', ['id', 'name', 'license', 'wlStatus',
+            'aliases', 'link', 'thumbnails', 'attributes', 'updated_at']);
     }
 }
