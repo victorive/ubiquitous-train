@@ -63,7 +63,7 @@ class CacheImagesJob implements ShouldQueue
         Cache::putMany($batchedImages, 60 * 60 * 24 * 7);
     }
 
-    private function fetchImage($response, string $cacheKey): ?array
+    public function fetchImage($response, string $cacheKey): ?array
     {
         if (!$response->successful()) {
             return null;
